@@ -1,0 +1,71 @@
+<style>
+li{
+    list-style-type: none;
+    margin-bottom: 5px;
+}
+img{
+    width: 95%;
+    height: auto;
+}
+
+.panel{
+    width: 48%;
+    height: auto;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.scrollbox{
+    width: 100%;
+    height: 500px;
+    overflow: auto;
+}
+
+select{
+    display: block;
+}
+</style>
+<h3>Rate my cakes</h3>
+
+<div class="panel">
+    <form (submit) ="onSubmit()">
+        <p>{{newCake | json }}</p>
+        <div class="form-group">
+        <label for="">Baker Name: </label>
+        <input type="text" name="newCake.baker_name" [(ngModel)] = "newCake.baker_name" />
+        </div>
+        <div class="form-group">
+        <label for="">Image: </label>
+        <input type="text" name="newCake.img_url" [(ngModel)] = "newCake.img_url" />
+        </div>
+       <input type="submit" value="Add New Cake">
+    </form>
+</div>
+
+<div class="panel">
+    <div class="scrollbox">
+       
+        <li *ngFor = "let cake of allcakes">
+            <div class="panel">
+                <img (click)="showCake(cake._id)" src={{cake.img_url}}/>
+            </div>
+            
+            <div class="panel">
+                {{cake.newcomment | json}}
+                <form (submit)="addCommentsToCake(cake)">
+                    <select name="cake.newcomment.stars" [(ngModel)] = "cake.newcomment.stars">
+                        <option value="1">1 stars</option>
+                        <option value="2">2 stars</option>
+                        <option value="3">3 stars</option>
+                        <option value="4">4 stars</option>
+                        <option value="5">5 stars</option>
+                    </select>
+                    <textarea name="cake.newcomment.content" [(ngModel)] = "cake.newcomment.content"  cols="30" rows="5"></textarea>
+                    <input style="display: block" type="submit" value="Rate!">
+                </form>
+            </div>
+        </li>
+    </div>
+</div>
+
+<app-cake *ngIf="cake.avgtocakeapp != '' " [cakeToShow]="cake"></app-cake>

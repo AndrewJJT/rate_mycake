@@ -1,0 +1,34 @@
+<style>
+.panel{
+    width: 48%;
+    height: auto;
+    display: inline-block;
+    vertical-align: top;
+}
+img{
+    width: 95%;
+    height: auto;
+}
+li{
+    list-style-type: none;
+}
+</style>
+
+{{cakeToShow | json}}
+<p>cake works!</p>
+<h3>Baked by {{cakeToShow.theCake.baker_name}}</h3>
+<div class="panel">
+    <img src={{cakeToShow.theCake.img_url}}>
+</div>
+<div class="panel">
+   <p *ngIf ="cakeToShow.avgtocakeapp; else elseBlock">average stars: {{cakeToShow.avgtocakeapp}} </p>
+   <ng-template #elseBlock>average stars: This cake has no rating yet! </ng-template>
+   <p *ngIf ="cakeToShow.theCake.comments">
+
+        <li *ngFor ="let comment of cakeToShow.theCake.comments">
+           <p> {{comment.stars}} stars</p>
+           <p> {{comment.content}}</p>
+        </li>
+
+   </p>
+</div> 
